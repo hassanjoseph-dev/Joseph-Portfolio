@@ -560,3 +560,10 @@ a {
     -webkit-text-stroke: 0;
     font-weight: 900;
 }
+
+/* Flat icons in "What I focus on" */
+.focus .ic svg { width: 1.8rem; height: 1.8rem; fill: var(--rt); transition: fill 0.25s, transform 0.25s; }
+.focus li:hover .ic svg { fill: #fff; transform: scale(1.08); }
+
+/* Remove the short red dash on top of the cards (Home and About pages) */
+.focus li::after, .skills li::after { content: none !important; }
