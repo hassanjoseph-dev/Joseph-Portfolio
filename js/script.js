@@ -1,5 +1,3 @@
-// Hassan Ore-Oluwa Joseph | Portfolio scripts
-// Sections run only on the pages that contain their elements.
 (() => {
   const $ = (sel, root = document) => root.querySelector(sel);
 
@@ -19,14 +17,14 @@
   document.body.prepend(scrollBar);
 
   let queued = false;
-  function onScroll() {                                  // one update per frame keeps scrolling smooth
+  function onScroll() {
     if (queued) return;
     queued = true;
     requestAnimationFrame(() => {
       const max = document.documentElement.scrollHeight - innerHeight;
       scrollBar.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
       header.classList.toggle('scrolled', scrollY > 24);
-      document.querySelectorAll('.timeline').forEach(t => {            // About: line draws as you scroll
+      document.querySelectorAll('.timeline').forEach(t => {
         const r = t.getBoundingClientRect();
         t.style.setProperty('--p', Math.max(0, Math.min(1, (innerHeight * 0.65 - r.top) / r.height)));
       });
@@ -40,7 +38,7 @@
   if (!calm && 'IntersectionObserver' in window) {
     const io = new IntersectionObserver(entries => {
       entries.filter(en => en.isIntersecting).forEach((en, i) => {
-        en.target.style.setProperty('--d', Math.min(i, 5) * 80 + 'ms');   // stagger items that appear together
+        en.target.style.setProperty('--d', Math.min(i, 5) * 80 + 'ms');
         en.target.classList.add('in');
         io.unobserve(en.target);
       });
@@ -49,7 +47,7 @@
       .forEach(el => { el.classList.add('reveal'); io.observe(el); });
   }
 
-  if (matchMedia('(hover: hover)').matches) {            // cursor-following glow on cards
+  if (matchMedia('(hover: hover)').matches) {
     document.addEventListener('pointermove', e => {
       const card = e.target.closest('.focus li, .skills li, .card, .item');
       if (!card) return;
@@ -75,7 +73,7 @@
     const tick = () => {
       if (row >= script.length) return;
       const line = script[row], cmd = line[0] === '$';
-      col += cmd ? 1 : line.length;                       // commands type out, results appear at once
+      col += cmd ? 1 : line.length;
       typed.innerHTML = done + html(line, col);
       if (col >= line.length) { done = typed.innerHTML + '\n'; row++; col = 0; }
       setTimeout(tick, cmd ? 75 : 380);
@@ -99,6 +97,7 @@
       });
     });
   }
+
   const taskForm = $('#taskForm');
   if (taskForm) {
     const KEY = 'hassan-planner-tasks';
@@ -109,17 +108,17 @@
       'Complete GST121 coursework', 'Practice JavaScript', 'Work on portfolio website',
       'Prepare for upcoming examination'];
 
-    let tasks = null;                                   // array of {id, text, done}
+    let tasks = null;
     try { tasks = JSON.parse(localStorage.getItem(KEY)); } catch (e) { tasks = null; }
     if (!Array.isArray(tasks)) tasks = starter.map((text, i) => ({ id: i + 1, text, done: false }));
 
-    const save = () => { try { localStorage.setItem(KEY, JSON.stringify(tasks)); } catch (e) { /* storage blocked */ } };
+    const save = () => { try { localStorage.setItem(KEY, JSON.stringify(tasks)); } catch (e) {} };
 
     function updateStats() {
       const done = tasks.filter(t => t.done).length, total = tasks.length;
       const pct = total ? Math.round((done / total) * 100) : 0;
       count.textContent = `${done} of ${total} tasks completed (${pct}%)`;
-      ring.style.strokeDashoffset = 327 - (327 * pct) / 100;           // progress ring
+      ring.style.strokeDashoffset = 327 - (327 * pct) / 100;
       ring.closest('.ring').setAttribute('aria-valuenow', pct);
       ring.closest('.dash').classList.toggle('complete', total > 0 && done === total);
       [['pct', pct + '%'], ['sTotal', total], ['sDone', done], ['sLeft', total - done]].forEach(([id, v]) => setNum($('#' + id), v));
@@ -138,7 +137,7 @@
 
       const label = document.createElement('label');
       label.htmlFor = box.id;
-      label.textContent = task.text;                    // textContent keeps user input safe
+      label.textContent = task.text;
 
       const del = document.createElement('button');
       del.type = 'button';
@@ -162,7 +161,7 @@
       save(); updateStats();
     });
 
-    list.addEventListener('change', e => {              // mark complete / incomplete
+    list.addEventListener('change', e => {
       const li = e.target.closest('.task');
       const task = tasks.find(t => t.id == li.dataset.id);
       task.done = e.target.checked;
@@ -170,7 +169,7 @@
       save(); updateStats();
     });
 
-    list.addEventListener('click', e => {               // delete
+    list.addEventListener('click', e => {
       if (!e.target.classList.contains('del')) return;
       const li = e.target.closest('.task');
       li.classList.add('out');
@@ -182,7 +181,8 @@
     });
 
     tasks.forEach(t => addItem(t, false));
-    requestAnimationFrame(() => requestAnimationFrame(updateStats));   // let the ring animate in
+    save();
+    requestAnimationFrame(() => requestAnimationFrame(updateStats));
   }
 
   const form = $('#contactForm');
@@ -215,7 +215,7 @@
     form.addEventListener('submit', async e => {
       e.preventDefault();
       status.className = 'status';
-      const valid = Object.keys(rules).map(check).every(Boolean);   // check every field so all errors show
+      const valid = Object.keys(rules).map(check).every(Boolean);
       if (!valid) {
         status.textContent = 'Fix the highlighted fields, then send again.';
         status.classList.add('no');
