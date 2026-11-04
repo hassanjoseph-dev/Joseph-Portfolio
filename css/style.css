@@ -516,3 +516,19 @@ a {
 .focus li:hover .ic svg { fill: #fff; transform: scale(1.08); }
 
 .focus li::after, .skills li::after { content: none !important; }
+
+.pg-contact .ic{
+  background:rgba(225,29,46,.12);
+  border:1px solid rgba(255,59,74,.4);
+  border-radius:12px;
+}
+.pg-contact .ic svg{
+  width:1.5rem;
+  height:1.5rem;
+  fill:var(--rt);
+  transition:fill .25s,transform .25s;
+}
+.pg-contact .reach li:hover .ic svg{
+  fill:#fff;
+  transform:scale(1.08);
+}
