@@ -3,7 +3,6 @@
 (() => {
   const $ = (sel, root = document) => root.querySelector(sel);
 
-  /* ---------- All pages: footer year, nav toggle ---------- */
   const year = $('#year');
   if (year) year.textContent = new Date().getFullYear();
 
@@ -13,7 +12,6 @@
     toggle.setAttribute('aria-expanded', open);
   });
 
-  /* ---------- Motion: progress bar, header state, scroll reveal, card glow ---------- */
   const header = $('.site-header');
   const scrollBar = document.createElement('div');
   scrollBar.className = 'scroll-bar';
@@ -61,7 +59,6 @@
     });
   }
 
-  /* ---------- Home: time-based greeting (dynamic content) ---------- */
   const greeting = $('#greeting');
   if (greeting) {
     const h = new Date().getHours();
@@ -69,7 +66,6 @@
     greeting.textContent = `${part}, and welcome to my student portfolio.`;
   }
 
-  /* ---------- Home: typing terminal ---------- */
   const typed = $('#typed');
   if (typed) {
     const script = ['$ whoami', 'Hassan Ore-Oluwa Joseph', '$ role', 'Computer Science student', '$ focus', 'cybersecurity | web dev | IT support'];
@@ -88,7 +84,6 @@
     else setTimeout(tick, 900);
   }
 
-  /* ---------- Projects: filter tabs ---------- */
   const filters = $('.filters');
   if (filters) {
     const category = { 'ethical-hacking': 'security', 'solar-inverter-installation': 'energy', 'portfolio-and-planner': 'web' };
@@ -104,8 +99,6 @@
       });
     });
   }
-
-  /* ---------- Planner: add, complete, delete ---------- */
   const taskForm = $('#taskForm');
   if (taskForm) {
     const KEY = 'hassan-planner-tasks';
@@ -192,7 +185,6 @@
     requestAnimationFrame(() => requestAnimationFrame(updateStats));   // let the ring animate in
   }
 
-  /* ---------- Contact: validation + Formspree submit ---------- */
   const form = $('#contactForm');
   if (form) {
     const status = $('#formStatus'), sendBtn = $('button[type=submit]', form);
